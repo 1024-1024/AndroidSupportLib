@@ -1,6 +1,7 @@
 package com.freedom.coder.http.custom;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
 
 import com.freedom.coder.http.custom.bean.UrlCacheBean;
 
@@ -38,8 +39,8 @@ public class HttpSender {
                 protected void onPostExecute(UrlCacheBean urlCacheBean) {
                     super.onPostExecute(urlCacheBean);
 
-                    if (urlCacheBean == null) {
-                        getDataFromServer(url);
+                    if (TextUtils.isEmpty(urlCacheBean.getData())) {
+                        getDataFromServer(urlCacheBean.getUrl());
                     }
 
                 }
