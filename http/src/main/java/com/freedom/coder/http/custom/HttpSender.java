@@ -5,21 +5,21 @@ import android.text.TextUtils;
 
 import com.freedom.coder.http.custom.bean.UrlCacheBean;
 
-import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Created by weilongzhang on 16/6/2.
  */
 public class HttpSender {
 
-    public static void sendPost(UrlCacheBean urlCacheBean, Map paramMap, final boolean
-            showLoading) {
+    public static void sendPost(final UrlCacheBean urlCacheBean, final HashMap<String, String>
+            paramMap, final boolean showLoading, final HttpCallbackListener listener) {
         boolean needCache = urlCacheBean.isNeedCache();
         final String url = urlCacheBean.getUrl();
 
         if (needCache) {
             //从缓存中取数据
-            new AsyncTask<String, Void, UrlCacheBean>() {
+            new AsyncTask<String, Void, Void>() {
 
                 @Override
                 protected void onPreExecute() {
@@ -30,33 +30,25 @@ public class HttpSender {
                 }
 
                 @Override
-                protected UrlCacheBean doInBackground(String... params) {
-                    UrlCacheBean cacheBean = HttpCacheUtil.getInstance().getCacheBean(params[0]);
-                    return cacheBean;
-                }
-
-                @Override
-                protected void onPostExecute(UrlCacheBean urlCacheBean) {
-                    super.onPostExecute(urlCacheBean);
-
-                    if (TextUtils.isEmpty(urlCacheBean.getData())) {
-                        getDataFromServer(urlCacheBean.getUrl());
+                protected Void doInBackground(String... params) {
+                    UrlCacheBean cacheBean = HttpCacheUtils.getInstance().getCacheBean(params[0]);
+                    if (TextUtils.isEmpty(cacheBean.getData())) {
+                        HttpUtils.sendHttpRequest(HttpUtils.RequestMehtod.POST, params[0],
+                                paramMap, listener);
+                    } else {
+                        if (listener != null) {
+                            listener.onCache(cacheBean.getData());
+                        }
                     }
-
+                    return null;
                 }
-
             }.execute(url);
-
         } else {
-            getDataFromServer(url);
+            HttpUtils.sendHttpRequest(HttpUtils.RequestMehtod.POST, url, paramMap, listener);
         }
     }
 
-    private static void getDataFromServer(String url) {
-
-    }
-
-    public static void sendGet(UrlCacheBean urlCacheBean, Map paramMap) {
+    public static void sendGet(UrlCacheBean urlCacheBean, HashMap<String, String> paramMap) {
 
     }
 
