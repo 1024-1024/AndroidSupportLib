@@ -15,8 +15,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by weilongzhang on 16/6/7.
@@ -41,15 +41,21 @@ public class HttpUtils {
                 List<NameValuePair> postParameters = new ArrayList<NameValuePair>();
                 //添加要传递的参数
                 if (param != null) {
-                    Iterator iterator = param.keySet().iterator();
-                    while (iterator.hasNext()) {
-                        postParameters.add(new BasicNameValuePair(iterator.next().toString(),
-                                param.get(iterator.next().toString())));
+                    //迭代器实现
+//                    Iterator iterator = param.keySet().iterator();
+//                    while (iterator.hasNext()) {
+//                        postParameters.add(new BasicNameValuePair(iterator.next().toString(),
+//                                param.get(iterator.next().toString())));
+//                    }
+                    for (Map.Entry<String, String> entry : param.entrySet()) {
+                        postParameters.add(new BasicNameValuePair(entry.getKey(), entry.getValue
+                                ()));
                     }
+
                 }
 
                 //实例化UrlEncodedFormEntity对象
-                UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(postParameters);
+                UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(postParameters, "utf-8");
 
                 //使用HttpPost对象来设置UrlEncodedFormEntity的Entity
                 request.setEntity(formEntity);
