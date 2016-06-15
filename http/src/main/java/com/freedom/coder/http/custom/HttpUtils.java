@@ -61,6 +61,9 @@ public class HttpUtils {
                 org.apache.http.HttpResponse response = client.execute(request);
 
                 if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+
+//                    String result = EntityUtils.toString(response.getEntity(),"utf-8");
+
                     in = new BufferedReader(new InputStreamReader(response.getEntity().getContent
                             ()));
                     StringBuffer string = new StringBuffer("");
@@ -100,6 +103,16 @@ public class HttpUtils {
             try {
                 //得到HttpClient对象
                 HttpClient getClient = new DefaultHttpClient();
+
+                StringBuffer buffer = new StringBuffer();
+                if (param != null && !param.isEmpty()) {
+                    for (Map.Entry<String, String> entry : param.entrySet()) {
+                        buffer.append(entry.getKey()).append("=").append(entry.getValue()).append
+                                ("&");
+                    }
+                    url = url + buffer.toString().substring(0, buffer.toString().lastIndexOf("&"));
+                }
+
                 //得到HttpGet对象
                 HttpGet request = new HttpGet(url);
                 //客户端使用GET方式执行请教，获得服务器端的回应response
