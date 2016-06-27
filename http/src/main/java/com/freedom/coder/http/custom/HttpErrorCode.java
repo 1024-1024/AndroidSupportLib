@@ -5,4 +5,6 @@ package com.freedom.coder.http.custom;
  */
 public class HttpErrorCode {
     public static final int ERROR_REQUEST_EXCEPTION = 0x10001;
+    public static final int ERROR_NO_DATA = 0x10002;
+    public static final int SUCCESS = 0x10003;
 }

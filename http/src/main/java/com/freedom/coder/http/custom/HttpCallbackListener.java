@@ -3,10 +3,12 @@ package com.freedom.coder.http.custom;
 /**
  * Created by weilongzhang on 16/6/7.
  */
-public interface HttpCallbackListener {
+public abstract class HttpCallbackListener {
 
-    void onSuccess(String successData);
-    void onError(int errorCode);
-    void onCache(String cacheData);
+    public abstract void onSuccess(int code, HttpResponse successData);
+
+    public abstract void onError(int errorCode, HttpResponse successData);
+
+    protected abstract HttpResponse onCache(String cacheData);
 
 }

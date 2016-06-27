@@ -1,6 +1,8 @@
 package com.freedom.coder.http.custom;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.text.TextUtils;
 
 import com.freedom.coder.http.custom.bean.UrlCacheBean;
@@ -12,7 +14,7 @@ import java.util.Map;
  */
 public class HttpSender {
 
-    public static void sendPost(final UrlCacheBean urlCacheBean, final Map<String, String>
+    public static void sendPost(Context context,final UrlCacheBean urlCacheBean, final Map<String, String>
             paramMap, final boolean showLoading, final HttpCallbackListener listener) {
         HttpRequest request = new HttpRequest();
         request.setUrlCacheBean(urlCacheBean);
@@ -20,10 +22,10 @@ public class HttpSender {
         request.setLoading(showLoading);
         request.setListener(listener);
         request.setParam(paramMap);
-        sendRequest(request);
+        sendRequest(context,request);
     }
 
-    public static void sendGet(UrlCacheBean urlCacheBean, Map<String, String> paramMap, final
+    public static void sendGet(Context context, UrlCacheBean urlCacheBean, Map<String, String> paramMap, final
     boolean showLoading, final HttpCallbackListener listener) {
         HttpRequest request = new HttpRequest();
         request.setUrlCacheBean(urlCacheBean);
@@ -31,43 +33,58 @@ public class HttpSender {
         request.setLoading(showLoading);
         request.setListener(listener);
         request.setParam(paramMap);
-        sendRequest(request);
+        sendRequest(context,request);
     }
 
 
-    private static void sendRequest(final HttpRequest request) {
-        boolean needCache = request.getUrlCacheBean().isNeedCache();
-        final String url = request.getUrlCacheBean().getUrl();
-        if (needCache) {
-            //从缓存中取数据
-            new AsyncTask<String, Void, Void>() {
-
-                @Override
-                protected void onPreExecute() {
-                    super.onPreExecute();
-                    if (request.isLoading()) {
-
-                    }
+    private static void sendRequest(final Context context, final HttpRequest request) {
+        final boolean needCache = request.getUrlCacheBean().isNeedCache();
+        final ContentLoadingProgressBar bar = new ContentLoadingProgressBar(context);
+        new AsyncTask<String, Void, HttpResponse>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                if (request.isLoading()) {
+                    bar.show();
                 }
+            }
 
-                @Override
-                protected Void doInBackground(String... params) {
+            @Override
+            protected HttpResponse doInBackground(String... params) {
+                HttpResponse response = new HttpResponse();
+                if (needCache) {
                     UrlCacheBean cacheBean = HttpCacheUtils.getInstance().getCacheBean(params[0]);
                     if (TextUtils.isEmpty(cacheBean.getData())) {
-                        HttpUtils.sendHttpRequest(request.getRequestMehtod(), params[0], request
-                                .getParam(), request.getListener());
+                        response = HttpUtils.sendHttpRequest(request);
                     } else {
                         if (request.getListener() != null) {
-                            request.getListener().onCache(cacheBean.getData());
+                            response = request.getListener().onCache(cacheBean.getData());
                         }
                     }
-                    return null;
+                } else {
+                    response = HttpUtils.sendHttpRequest(request);
                 }
-            }.execute(url);
-        } else {
-            HttpUtils.sendHttpRequest(HttpUtils.RequestMehtod.POST, url, request.getParam(),
-                    request.getListener());
-        }
+                return response;
+            }
+
+            @Override
+            protected void onPostExecute(HttpResponse httpResponse) {
+                super.onPostExecute(httpResponse);
+
+                if (httpResponse == null || httpResponse.getResponseBean() == null ||
+                        TextUtils.isEmpty(httpResponse.getResponseBean().getData())) {
+                    if (request.getListener() != null) {
+                        request.getListener().onError(HttpErrorCode.ERROR_REQUEST_EXCEPTION,
+                                httpResponse);
+                    }
+                } else if (!TextUtils.isEmpty(httpResponse.getResponseBean().getData())) {
+                    if (request.getListener() != null) {
+                        request.getListener().onSuccess(HttpErrorCode.SUCCESS, httpResponse);
+                    }
+                }
+                bar.hide();
+            }
+        }.execute();
     }
 
 }
