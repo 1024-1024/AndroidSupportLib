@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class HttpSender {
 
-    public static void sendPost(Context context,final UrlCacheBean urlCacheBean, final Map<String, String>
+    protected static void sendPost(Context context,final UrlCacheBean urlCacheBean, final Map<String, String>
             paramMap, final boolean showLoading, final HttpCallbackListener listener) {
         HttpRequest request = new HttpRequest();
         request.setUrlCacheBean(urlCacheBean);
@@ -25,7 +25,7 @@ public class HttpSender {
         sendRequest(context,request);
     }
 
-    public static void sendGet(Context context, UrlCacheBean urlCacheBean, Map<String, String> paramMap, final
+    protected static void sendGet(Context context, UrlCacheBean urlCacheBean, Map<String, String> paramMap, final
     boolean showLoading, final HttpCallbackListener listener) {
         HttpRequest request = new HttpRequest();
         request.setUrlCacheBean(urlCacheBean);
@@ -37,7 +37,7 @@ public class HttpSender {
     }
 
 
-    private static void sendRequest(final Context context, final HttpRequest request) {
+    protected static void sendRequest(final Context context, final HttpRequest request) {
         final boolean needCache = request.getUrlCacheBean().isNeedCache();
         final ContentLoadingProgressBar bar = new ContentLoadingProgressBar(context);
         new AsyncTask<String, Void, HttpResponse>() {
