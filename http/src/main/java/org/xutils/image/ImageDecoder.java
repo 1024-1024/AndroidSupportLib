@@ -1,6 +1,5 @@
 package org.xutils.image;
 
-import android.backport.webp.WebPFactory;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -13,6 +12,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 
+import org.xutils.backport.webp.WebPFactory;
 import org.xutils.cache.DiskCacheEntity;
 import org.xutils.cache.DiskCacheFile;
 import org.xutils.cache.LruDiskCache;
