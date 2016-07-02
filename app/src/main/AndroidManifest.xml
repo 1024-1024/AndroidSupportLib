@@ -15,6 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".http.XUtilsActivity"/>
+        <activity android:name=".http.RetrofitActivity"/>
+        <activity android:name=".http.OkHttpActivity"/>
+        <activity android:name=".http.VolleyActivity"/>
     </application>
 
 </manifest>

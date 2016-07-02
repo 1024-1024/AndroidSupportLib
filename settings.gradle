@@ -1,1 +1,1 @@
-include ':app', ':http', ':imageloader'
+include ':app', ':http', ':imageloader', ':utils'

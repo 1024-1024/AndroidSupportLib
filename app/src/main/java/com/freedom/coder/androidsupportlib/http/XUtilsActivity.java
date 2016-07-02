@@ -1,3 +1,5 @@
+package com.freedom.coder.androidsupportlib.http;
+
 import android.app.Activity;
 import android.os.Bundle;
 
