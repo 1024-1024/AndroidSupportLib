@@ -8,20 +8,20 @@ import android.widget.Toast;
  */
 public class ToastUtils {
 
-    public static void showLong(Context context, String message) {
+    public static void showLongToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
-    public static void showShort(Context context, String message) {
+    public static void showShortToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
-    public static void showLongWithRID(Context context,int id ) {
+    public static void showLongToast(Context context,int id ) {
         String message = context.getResources().getString(id);
         Toast.makeText(context,message,Toast.LENGTH_LONG).show();
     }
 
-    public static void showShortWithRID(Context context,int id ) {
+    public static void showShortToast(Context context,int id ) {
         String message = context.getResources().getString(id);
         Toast.makeText(context,message,Toast.LENGTH_SHORT).show();
     }

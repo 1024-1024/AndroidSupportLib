@@ -16,6 +16,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         requestQueue = Volley.newRequestQueue(this);
+        requestQueue.start();
     }
 
     public static RequestQueue getRequestQueue() {
