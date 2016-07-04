@@ -15,14 +15,13 @@ public class UrlUtils {
             for (Map.Entry<String,String> param : params.entrySet()) {
                 String key = param.getKey();
                 String value = param.getValue();
-                newUrl.append(key).append("=").append(value).append("&");
+                try {
+                    newUrl.append(key).append("=").append(URLEncoder.encode(value,"utf-8")).append("&");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        try {
-            return URLEncoder.encode(newUrl.toString(),"utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return "";
-        }
+        return newUrl.toString();
     }
 }
