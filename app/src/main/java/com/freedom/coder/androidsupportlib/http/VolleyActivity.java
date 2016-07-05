@@ -10,7 +10,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.freedom.coder.androidsupportlib.MyApplication;
 import com.freedom.coder.androidsupportlib.R;
 
@@ -39,12 +38,27 @@ public class VolleyActivity extends Activity {
 
 
     public void get(View view) {
+//        //请求成功,简单的string请求
+//        StringRequest request = new StringRequest(Request.Method.GET, UrlUtils.concatUrl
+//                (MyApplication.url, MyApplication.getParams()), new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                data.setText("get:" + UnicodeUtils.decode1(response));
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
 
-        StringRequest request = new StringRequest(Request.Method.GET, UrlUtils.concatUrl
-                (MyApplication.url, MyApplication.getParams()), new Response.Listener<String>() {
+        //请求成功,简单的json get请求
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, UrlUtils.concatUrl
+                (MyApplication.url, MyApplication.getParams()), new Response.Listener<JSONObject>
+                () {
             @Override
-            public void onResponse(String response) {
-                data.setText("get:" + UnicodeUtils.decode1(response));
+            public void onResponse(JSONObject response) {
+                data.setText("get:" + UnicodeUtils.decode1(response.toString()));
             }
         }, new Response.ErrorListener() {
             @Override
@@ -52,6 +66,7 @@ public class VolleyActivity extends Activity {
 
             }
         });
+
         requestQueue.add(request);
     }
 
