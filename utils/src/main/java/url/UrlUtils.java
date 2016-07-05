@@ -12,6 +12,7 @@ public class UrlUtils {
     public static String  concatUrl(String url , Map<String,String> params) {
         StringBuilder newUrl = new StringBuilder(url);
         if (params != null) {
+            newUrl.append("?");
             for (Map.Entry<String,String> param : params.entrySet()) {
                 String key = param.getKey();
                 String value = param.getValue();

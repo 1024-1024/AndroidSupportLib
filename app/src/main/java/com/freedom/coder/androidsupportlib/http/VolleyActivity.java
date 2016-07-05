@@ -16,6 +16,7 @@ import com.freedom.coder.androidsupportlib.R;
 
 import org.json.JSONObject;
 
+import unicode.UnicodeUtils;
 import url.UrlUtils;
 
 /**
@@ -43,7 +44,7 @@ public class VolleyActivity extends Activity {
                 (MyApplication.url, MyApplication.getParams()), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                data.setText("get:"+response);
+                data.setText("get:" + UnicodeUtils.decode1(response));
             }
         }, new Response.ErrorListener() {
             @Override
@@ -55,10 +56,12 @@ public class VolleyActivity extends Activity {
     }
 
     public void post(View view) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, MyApplication.url, MyApplication.getJSonRequest(), new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                MyApplication.url, MyApplication.getJSonRequest(), new Response
+                .Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                data.setText("post:"+response.toString());
+                data.setText("post:" + response.toString());
             }
         }, new Response.ErrorListener() {
             @Override

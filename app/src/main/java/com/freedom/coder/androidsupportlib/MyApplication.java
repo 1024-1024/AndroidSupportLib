@@ -4,9 +4,7 @@ import android.app.Application;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -34,17 +32,15 @@ public class MyApplication extends Application {
     }
 
     public static JSONObject getJSonRequest() {
-        Map<String,String> params = new HashMap<String,String>();
-        params.put("scope","103");
-        params.put("format","json");
-        params.put("appid","379020");
-        params.put("bk_key","习近平");
-        params.put("bk_length","600");
         try {
-            JSONObject jsonObject = new JSONObject(new Gson().toJson(params));
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("scope","103");
+            jsonObject.put("format","json");
+            jsonObject.put("appid","379020");
+            jsonObject.put("bk_key","习近平");
+            jsonObject.put("bk_length","600");
             return jsonObject;
-        } catch (JSONException e) {
-            e.printStackTrace();
+        }catch (Exception e) {
             return null;
         }
     }
