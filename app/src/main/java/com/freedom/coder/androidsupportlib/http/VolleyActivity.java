@@ -40,7 +40,7 @@ public class VolleyActivity extends Activity {
     public void get(View view) {
 //        //请求成功,简单的string请求
 //        StringRequest request = new StringRequest(Request.Method.GET, UrlUtils.concatUrl
-//                (MyApplication.url, MyApplication.getParams()), new Response.Listener<String>() {
+//                (MyApplication.mGeUrl, MyApplication.getParams()), new Response.Listener<String>() {
 //            @Override
 //            public void onResponse(String response) {
 //                data.setText("get:" + UnicodeUtils.decode1(response));
@@ -54,7 +54,7 @@ public class VolleyActivity extends Activity {
 
         //请求成功,简单的json get请求
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, UrlUtils.concatUrl
-                (MyApplication.url, MyApplication.getParams()), new Response.Listener<JSONObject>
+                (MyApplication.mGetUrl, MyApplication.getParams()), new Response.Listener<JSONObject>
                 () {
             @Override
             public void onResponse(JSONObject response) {
@@ -72,7 +72,7 @@ public class VolleyActivity extends Activity {
 
     public void post(View view) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                MyApplication.url, MyApplication.getJSonRequest(), new Response
+                MyApplication.mPostUrl, MyApplication.getPostJsonRequest(), new Response
                 .Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -81,7 +81,7 @@ public class VolleyActivity extends Activity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                data.setText("error:" +error.toString());
             }
         });
         requestQueue.add(jsonObjectRequest);
