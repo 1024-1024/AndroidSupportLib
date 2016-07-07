@@ -10,25 +10,35 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.OkHttpClient;
+
 /**
  * Created by weilongzhang on 16/7/2.
  */
 public class MyApplication extends Application {
 
-    private static RequestQueue requestQueue;
-
+    private static OkHttpClient mOkHttpClient;
+    private static RequestQueue mRequestQueue;
     public static String url = "http://baike.baidu.com/api/openapi/BaikeLemmaCardApi";
-
 
     @Override
     public void onCreate() {
         super.onCreate();
-        requestQueue = Volley.newRequestQueue(this);
-        requestQueue.start();
+        if (mOkHttpClient == null) {
+            mOkHttpClient = new OkHttpClient();
+        }
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(this);
+            mRequestQueue.start();
+        }
     }
 
     public static RequestQueue getRequestQueue() {
-        return requestQueue;
+        return mRequestQueue;
+    }
+
+    public static OkHttpClient getOkHttpClient() {
+        return mOkHttpClient;
     }
 
     public static JSONObject getJSonRequest() {

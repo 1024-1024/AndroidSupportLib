@@ -17,7 +17,7 @@ public class UrlUtils {
                 String key = param.getKey();
                 String value = param.getValue();
                 try {
-                    newUrl.append(key).append("=").append(URLEncoder.encode(value,"utf-8")).append("&");
+                    newUrl.append(URLEncoder.encode(key,"utf-8")).append("=").append(URLEncoder.encode(value,"utf-8")).append("&");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
