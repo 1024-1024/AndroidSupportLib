@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import okhttp3.Request;
 import okhttp3.Response;
+import unicode.UnicodeUtils;
 import url.UrlUtils;
 
 /**
@@ -52,11 +53,7 @@ public class OkHttpActivity extends Activity {
             super.handleMessage(msg);
             switch (msg.arg1) {
                 case RESPONSE_DATA:
-                    try {
-                        mData.setText(((Response)msg.obj).body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    mData.setText(msg.obj.toString());
                     break;
                 default:
             }
@@ -72,8 +69,15 @@ public class OkHttpActivity extends Activity {
             public void run() {
                 try {
                     Response resp = MyApplication.getOkHttpClient().newCall(request).execute();
+                    String responseString ;
+                    if (resp.isSuccessful()) {
+                        responseString = resp.body().string();
+                        responseString = UnicodeUtils.decode1(responseString);
+                    } else {
+                        responseString = "失败";
+                    }
                     Message message = Message.obtain();
-                    message.obj = resp;
+                    message.obj = responseString;
                     message.arg1 = RESPONSE_DATA;
                     mHandler.sendMessage(message);
                 } catch (IOException e) {
