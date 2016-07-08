@@ -31,7 +31,6 @@ public class OkHttpActivity extends Activity {
     private TextView mData;
     private static final int RESPONSE_DATA = 0x1;
     private ProgressBar mPb;
-    
 
 
     @Override
@@ -47,7 +46,7 @@ public class OkHttpActivity extends Activity {
                 okHttpDownload();
             }
         });
-        
+
         findViewById(R.id.btn_get).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,42 +73,41 @@ public class OkHttpActivity extends Activity {
     private void okHttpDownload() {
 
 
-
     }
 
     private void uploadFile() {
-        String IMGUR_CLIENT_ID = "9199fdef135c122";
-        MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String IMGUR_CLIENT_ID = "9199fdef135c122";
+                MediaType MEDIA_TYPE_PNG = MediaType.parse("image/jpg");
 
-        MultipartBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("title", "Square Logo")
-                .addFormDataPart("image", "logo-square.png", RequestBody.create(MEDIA_TYPE_PNG, new File("website/static/logo-square.png")))
-                .build();
+                MultipartBody requestBody = new MultipartBody.Builder().setType(MultipartBody
+                        .FORM).addFormDataPart("title", "Square Logo").addFormDataPart("image",
+                        "logo-square.png", RequestBody.create(MEDIA_TYPE_PNG, new File
+                                ("/storage/emulated/0/knowbox_rc/cartoon/e45e78d155c9379b6456499832306e54/cartoon_1.jpg"))).build();
 
-        Request request = new Request.Builder()
-                .header("Authorization", "Client-ID " + IMGUR_CLIENT_ID)
-                .url("https://api.imgur.com/3/image")
-                .post(requestBody)
-                .build();
-
-        Response response = null;
-        try {
-            response = MyApplication.getOkHttpClient().newCall(request)
-                    .execute();
-            if (!response.isSuccessful()) {
-                throw new IOException("Unexpected code" + request);
-            }
-            final String resp = response.body().string();
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mData.setText(resp);
+                Request request = new Request.Builder().header("Authorization", "Client-ID " +
+                        IMGUR_CLIENT_ID).url("https://api.imgur.com/3/image").post(requestBody)
+                        .build();
+                Response response = null;
+                try {
+                    response = MyApplication.getOkHttpClient().newCall(request).execute();
+                    if (!response.isSuccessful()) {
+                        throw new IOException("Unexpected code" + request);
+                    }
+                    final String resp = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mData.setText(resp);
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            }
+        }).start();
     }
 
     private Handler mHandler = new Handler(Looper.getMainLooper()) {
@@ -127,8 +125,8 @@ public class OkHttpActivity extends Activity {
 
 
     private void okHttpGet() {
-        final Request request = new Request.Builder().url(UrlUtils.concatUrl(MyApplication.mGetUrl,
-                MyApplication.getParams())).build();
+        final Request request = new Request.Builder().url(UrlUtils.concatUrl(MyApplication
+                .mGetUrl, MyApplication.getParams())).build();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -182,12 +180,16 @@ public class OkHttpActivity extends Activity {
 //                        ("bk_length", "600").build();
 
                 MediaType jsonType = MediaType.parse("application/json;charset=utf-8");
-                RequestBody requestBody = RequestBody.create(jsonType,MyApplication.getPostJsonRequest().toString());
-                Request request = new Request.Builder().url(MyApplication.mPostUrl).post(requestBody).build();
+                RequestBody requestBody = RequestBody.create(jsonType, MyApplication
+                        .getPostJsonRequest().toString());
+                Request request = new Request.Builder().url(MyApplication.mPostUrl).post
+                        (requestBody).build();
                 try {
-                    final Response response = MyApplication.getOkHttpClient().newCall(request).execute();
+                    final Response response = MyApplication.getOkHttpClient().newCall(request)
+                            .execute();
                     if (response.isSuccessful()) {
-                        final String responseString = UnicodeUtils.decode1(response.body().string());
+                        final String responseString = UnicodeUtils.decode1(response.body().string
+                                ());
 
                         runOnUiThread(new Runnable() {
                             @Override

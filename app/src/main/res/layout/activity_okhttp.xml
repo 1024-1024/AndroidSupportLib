@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/btn_download"
-        android:text="okHttp upload"
+        android:text="okHttp download"
         android:textAllCaps="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
