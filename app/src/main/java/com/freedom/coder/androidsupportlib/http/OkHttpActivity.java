@@ -168,7 +168,7 @@ public class OkHttpActivity extends Activity {
 //                RequestBody formBody = builder.build();
 //                // Create Request (same)
 //                Request request = new Request.Builder()
-//                        .mGetUrl( "" )
+//                        .url( "" )
 //                        .post( formBody )
 //                        .build();
 
