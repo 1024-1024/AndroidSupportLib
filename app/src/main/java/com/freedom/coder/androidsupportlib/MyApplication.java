@@ -14,7 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
+import retrofit.Retrofit;
+
 
 /**
  * Created by weilongzhang on 16/7/2.

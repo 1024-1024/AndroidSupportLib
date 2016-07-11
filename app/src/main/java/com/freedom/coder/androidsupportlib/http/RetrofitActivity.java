@@ -5,15 +5,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.freedom.coder.androidsupportlib.MyApplication;
 import com.freedom.coder.androidsupportlib.R;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
+import java.util.Hashtable;
+import java.util.List;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
+import retrofit.http.GET;
+import retrofit.http.Path;
 
 /**
  * Created by weilongzhang on 16/7/2.
@@ -47,36 +49,51 @@ public class RetrofitActivity extends Activity {
 
     private void retrofitGet() {
 
-        Retrofit retrofit = MyApplication.getRetrofit();
-        GetData getData = retrofit.create(GetData.class);
-        Call<String> call = getData.getDatas(MyApplication.getGetParams());
-        call.enqueue(new Callback<String>() {
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-
-                if (response.isSuccessful()) {
-                    final String string = response.body().toString();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mData.setText(string);
-                        }
-                    });
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                final String string = t.getLocalizedMessage();
-                runOnUiThread(new Runnable() {
+            public void run() {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://api.github.com")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(new com.squareup.okhttp.OkHttpClient())
+                        .build();
+                GitHub gitHubService = retrofit.create(GitHub.class);
+                Call<List<Contributor>> call = gitHubService.contributors("square", "retrofit");
+//                try{
+//                    Response<List<Contributor>> response = call.execute(); // 同步
+//                    Log.d("zwl", "response:" + response.body().toString());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+                call.enqueue(new Callback<List<Contributor>>() {
                     @Override
-                    public void run() {
-                        mData.setText(string);
+                    public void onResponse(retrofit.Response<List<Contributor>> response, Retrofit retrofit) {
+                        if (response.isSuccess()) {
+                            final String string = response.body().toString();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mData.setText(string);
+                                }
+                            });
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        final String string = t.getLocalizedMessage();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mData.setText(string);
+                            }
+                        });
                     }
                 });
             }
-        });
+        }).start();
+
 
     }
 
@@ -84,9 +101,25 @@ public class RetrofitActivity extends Activity {
 
     }
 
-
-    interface GetData {
-        @GET("/{param}")
-        Call<String> getDatas(@Path("param") String param);
+    public static class Contributor {
+        public final String login;
+        public final int contributions;
+        public Contributor(String login, int contributions) {
+            this.login = login;
+            this.contributions = contributions;
+        }
+        @Override
+        public String toString() {
+            return "Contributor{" +
+                    "login='" + login + '\'' +
+                    ", contributions=" + contributions +
+                    '}';
+        }
+    }
+    public interface GitHub {
+        @GET("/repos/{owner}/{repo}/contributors")
+        Call<List<Contributor>> contributors(
+                @Path("owner") String owner,
+                @Path("repo") String repo);
     }
 }
