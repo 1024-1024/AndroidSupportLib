@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
 
 /**
  * Created by weilongzhang on 16/7/2.
@@ -22,8 +23,9 @@ public class MyApplication extends Application {
 
     private static OkHttpClient mOkHttpClient;
     private static RequestQueue mRequestQueue;
-    public static String mGetUrl = "http://baike.baidu.com/api/openapi/BaikeLemmaCardApi";
-    public static String mPostUrl = "http://staging.qraved.com:8033/app/home/timeline";
+    private static Retrofit mRetrofit;
+    public static String mGetUrl = "http://baike.baidu.com/api/openapi/BaikeLemmaCardApi/";
+    public static String mPostUrl = "http://staging.qraved.com:8033/app/home/timeline/";
 
     @Override
     public void onCreate() {
@@ -35,6 +37,11 @@ public class MyApplication extends Application {
             mRequestQueue = Volley.newRequestQueue(this);
             mRequestQueue.start();
         }
+        if (mRetrofit == null) {
+            mRetrofit = new Retrofit.Builder().baseUrl(mGetUrl).build();
+
+        }
+
     }
 
     public static RequestQueue getRequestQueue() {
@@ -45,6 +52,9 @@ public class MyApplication extends Application {
         return mOkHttpClient;
     }
 
+    public static Retrofit getRetrofit() {
+        return mRetrofit;
+    }
 
     public static JSONObject getPostJsonRequest() {
         JSONObject jsonObject = new JSONObject();
@@ -92,6 +102,22 @@ public class MyApplication extends Application {
         params.put("bk_key", "习近平");
         params.put("bk_length", "600");
         return params;
+    }
+
+    public static String getGetParams() {
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            stringBuilder.append(URLEncoder.encode("scope", "utf-8")).append("=").append
+                    (URLEncoder.encode("103", "utf-8")).append(URLEncoder.encode("format",
+                    "utf-8")).append("=").append(URLEncoder.encode("json", "utf-8")).append
+                    (URLEncoder.encode("appid", "utf-8")).append("=").append(URLEncoder.encode
+                    ("379020", "utf-8")).append(URLEncoder.encode("bk_key", "utf-8")).append("=")
+                    .append(URLEncoder.encode("习近平", "utf-8")).append(URLEncoder.encode
+                    ("bk_length", "utf-8")).append("=").append(URLEncoder.encode("600", "utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
     }
 
 }

@@ -31,6 +31,7 @@
 
             <TextView
                 android:id="@+id/tv_data"
+                android:text="retrofit 引入的库不完整,暂时使用jar包"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
