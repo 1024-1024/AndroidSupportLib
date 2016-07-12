@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.freedom.coder.androidsupportlib.R;
 
-import java.util.Hashtable;
 import java.util.List;
 
 import retrofit.Call;
@@ -15,6 +14,7 @@ import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Path;
 
 /**
@@ -121,5 +121,6 @@ public class RetrofitActivity extends Activity {
         Call<List<Contributor>> contributors(
                 @Path("owner") String owner,
                 @Path("repo") String repo);
+
     }
 }
