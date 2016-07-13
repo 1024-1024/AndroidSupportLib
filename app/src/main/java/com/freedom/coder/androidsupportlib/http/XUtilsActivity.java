@@ -37,7 +37,6 @@ public class XUtilsActivity extends Activity {
     }
 
     private void xUtilsGet() {
-        
     }
 
     private void xUtilsPost() {
