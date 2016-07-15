@@ -25,6 +25,7 @@
         <activity android:name=".http.RetrofitActivity"/>
         <activity android:name=".http.OkHttpActivity"/>
         <activity android:name=".http.VolleyActivity"/>
+        <activity android:name=".rxjava.RxJavaActivity"/>
     </application>
 
 </manifest>

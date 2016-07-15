@@ -30,4 +30,7 @@ dependencies {
     compile project(':http')
     compile project(':imageloader')
     compile project(':utils')
+    compile project(':designpattern')
+    compile project(':handler')
+    compile project(':rxjava')
 }
