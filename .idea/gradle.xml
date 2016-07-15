@@ -11,8 +11,10 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/designpattern" />
+            <option value="$PROJECT_DIR$/handler" />
             <option value="$PROJECT_DIR$/http" />
             <option value="$PROJECT_DIR$/imageloader" />
+            <option value="$PROJECT_DIR$/rxjava" />
             <option value="$PROJECT_DIR$/utils" />
           </set>
         </option>
@@ -21,8 +23,10 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/designpattern" />
+            <option value="$PROJECT_DIR$/handler" />
             <option value="$PROJECT_DIR$/http" />
             <option value="$PROJECT_DIR$/imageloader" />
+            <option value="$PROJECT_DIR$/rxjava" />
             <option value="$PROJECT_DIR$/utils" />
           </set>
         </option>
