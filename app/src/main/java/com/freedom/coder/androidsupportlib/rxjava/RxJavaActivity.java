@@ -20,7 +20,8 @@ import rx.schedulers.Schedulers;
 /**
  * Created by weilongzhang on 16/7/15.
  *
- * @link https://gank.io/post/560e15be2dca930e00da1083
+ * https://gank.io/post/560e15be2dca930e00da1083
+ * http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2016/0429/4196.html
  */
 public class RxJavaActivity extends Activity {
 
