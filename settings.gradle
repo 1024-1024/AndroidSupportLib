@@ -1,1 +1,1 @@
-include ':app', ':http', ':imageloader', ':utils', ':designpattern', ':rxjava', ':handler'
+include ':app', ':http', ':imageloader', ':utils', ':designpattern', ':rxjava', ':handler', ':sqllite'

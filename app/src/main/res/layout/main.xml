@@ -15,4 +15,10 @@
         android:text="rxjava"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:onClick="imageLoader"
+        android:text="imageLoader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

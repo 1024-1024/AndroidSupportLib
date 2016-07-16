@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.freedom.coder.androidsupportlib.http.HttpActivity;
+import com.freedom.coder.androidsupportlib.imageloader.ImageLoaderActivity;
 import com.freedom.coder.androidsupportlib.rxjava.RxJavaActivity;
 
 /**
@@ -26,6 +27,11 @@ public class MainActivity extends Activity {
 
     public void rxJava(View view) {
         Intent intent = new Intent(this, RxJavaActivity.class);
+        startActivity(intent);
+    }
+
+    public void imageLoader(View view) {
+        Intent intent = new Intent(this, ImageLoaderActivity.class);
         startActivity(intent);
     }
 

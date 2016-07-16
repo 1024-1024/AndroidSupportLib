@@ -26,6 +26,7 @@
         <activity android:name=".http.OkHttpActivity"/>
         <activity android:name=".http.VolleyActivity"/>
         <activity android:name=".rxjava.RxJavaActivity"/>
+        <activity android:name=".imageloader.ImageLoaderActivity"/>
     </application>
 
 </manifest>
