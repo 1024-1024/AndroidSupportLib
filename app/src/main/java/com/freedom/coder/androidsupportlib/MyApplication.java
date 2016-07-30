@@ -51,7 +51,6 @@ public class MyApplication extends Application {
         if (mRetrofit == null) {
             mRetrofit = new Retrofit.Builder().baseUrl(mGetUrl).build();
         }
-
         File cacheDir = StorageUtils.getCacheDirectory(this);
         ImageLoaderConfiguration config = new ImageLoaderConfiguration
                 .Builder(this)
