@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.freedom.coder.androidsupportlib.designpattern.DesignPatternActivity;
 import com.freedom.coder.androidsupportlib.http.HttpActivity;
 import com.freedom.coder.androidsupportlib.imageloader.ImageLoaderActivity;
 import com.freedom.coder.androidsupportlib.rxjava.RxJavaActivity;
@@ -32,6 +33,11 @@ public class MainActivity extends Activity {
 
     public void imageLoader(View view) {
         Intent intent = new Intent(this, ImageLoaderActivity.class);
+        startActivity(intent);
+    }
+
+    public void designPattern(View view) {
+        Intent intent = new Intent(this, DesignPatternActivity.class);
         startActivity(intent);
     }
 

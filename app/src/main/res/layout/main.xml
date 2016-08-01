@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <Button
-        android:onClick="http"
-        android:text="网络http"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:onClick="http"
+        android:text="网络http"/>
 
     <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="rxJava"
         android:text="rxjava"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textAllCaps="false"/>
 
     <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="imageLoader"
         android:text="imageLoader"
+        android:textAllCaps="false"/>
+
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:onClick="designPattern"
+        android:text="design pattern"
+        android:textAllCaps="false"/>
 </LinearLayout>
